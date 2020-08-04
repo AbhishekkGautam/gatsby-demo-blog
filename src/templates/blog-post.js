@@ -14,7 +14,7 @@ const Template = ({ data }) => {
           async
           src="https://demo.fewcents.co/static/js/paywall.js"
           id="fewcents_paywall"
-          contentSelector="blogpost"
+          contentSelector={post.id}
         />
       </Helmet>
       <SEO title="BlogPost" />
@@ -24,7 +24,7 @@ const Template = ({ data }) => {
       <h6 style={{ color: "grey" }}>
         Posted by {post.frontmatter.author} on {post.frontmatter.date}
       </h6>
-      <div class="blogpost" dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div class={post.id} dangerouslySetInnerHTML={{ __html: post.html }} />
     </Layout>
   )
 }
@@ -33,6 +33,7 @@ export const postQuery = graphql`
   query BlogPostByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
+      id
       frontmatter {
         path
         title
